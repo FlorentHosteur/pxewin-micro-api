@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using Serilog;
+
 
 namespace PXEwin
 {
@@ -16,10 +18,14 @@ namespace PXEwin
     // [System.Web.Script.Services.ScriptService]
     public class pxewin : System.Web.Services.WebService
     {
+        private static Serilog.Core.Logger mylog = new LoggerConfiguration().MinimumLevel.Debug().WriteTo.File(HttpContext.Current.Server.MapPath("~/log/PXEwin.log"), rollingInterval: RollingInterval.Day).CreateLogger();
 
         [WebMethod]
         public string GetComputerName(String Mac)
         {
+            // Debug
+            mylog.Debug(string.Format("Calling GetComputerName, with param {0}", Mac));
+
             string sGetComputerName;
 
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -34,7 +40,30 @@ namespace PXEwin
             return sGetComputerName;
 
         }
+
+        [WebMethod]
+        public string GetComputerPassword(String Mac)
+        {
+            // Debug
+            mylog.Debug(string.Format("Calling GetComputerPassword, with param {0}", Mac));
+
+            string sGetComputerPassword;
+
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%{[]}@&$%~";
+            int length = 14;
+            var random = new Random();
+            var randomString = new string(Enumerable.Repeat(chars, length)
+                                                    .Select(s => s[random.Next(s.Length)]).ToArray());
+
+
+            sGetComputerPassword = randomString;
+
+            return sGetComputerPassword;
+            
+        }
+
+
     }
 
-    
+
 }

@@ -10,16 +10,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/PXEwin.dll">
-      <publishTime>10/07/2021 09:09:33</publishTime>
+      <publishTime>10/07/2021 09:56:11</publishTime>
     </File>
     <File Include="bin/PXEwin.pdb">
-      <publishTime>10/07/2021 09:09:33</publishTime>
+      <publishTime>10/07/2021 09:56:11</publishTime>
+    </File>
+    <File Include="bin/Serilog.dll">
+      <publishTime>09/10/2020 02:20:20</publishTime>
+    </File>
+    <File Include="bin/Serilog.Sinks.File.dll">
+      <publishTime>06/25/2021 08:00:44</publishTime>
+    </File>
+    <File Include="bin/Serilog.Sinks.File.pdb">
+      <publishTime>06/25/2021 08:00:44</publishTime>
     </File>
     <File Include="pxewin.asmx">
       <publishTime>10/07/2021 08:59:40</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/07/2021 09:09:33</publishTime>
+      <publishTime>10/07/2021 09:56:12</publishTime>
     </File>
   </ItemGroup>
 </Project>
