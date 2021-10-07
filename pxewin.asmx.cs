@@ -29,7 +29,7 @@ namespace PXEwin
             string sGetComputerName;
 
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            int length = 10;
+            int length = 4;
             var random       = new Random();
             var randomString = new string(Enumerable.Repeat(chars, length)
                                                     .Select(s => s[random.Next(s.Length)]).ToArray());
