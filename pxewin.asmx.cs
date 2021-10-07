@@ -18,7 +18,7 @@ namespace PXEwin
     // [System.Web.Script.Services.ScriptService]
     public class pxewin : System.Web.Services.WebService
     {
-        private static Serilog.Core.Logger mylog = new LoggerConfiguration().MinimumLevel.Debug().WriteTo.File(HttpContext.Current.Server.MapPath("~/log/PXEwin.log"), rollingInterval: RollingInterval.Day).CreateLogger();
+        private static Serilog.Core.Logger mylog = new LoggerConfiguration().MinimumLevel.Debug().WriteTo.File(@"C:\inetpub\logs\\LogFiles\pxelog\PXEwin-{Date}.log", rollingInterval: RollingInterval.Day).CreateLogger();
 
         [WebMethod]
         public string GetComputerName(String Mac)
