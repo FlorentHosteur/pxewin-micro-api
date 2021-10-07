@@ -18,13 +18,13 @@ namespace PXEwin
     // [System.Web.Script.Services.ScriptService]
     public class pxewin : System.Web.Services.WebService
     {
-        private static Serilog.Core.Logger mylog = new LoggerConfiguration().MinimumLevel.Debug().WriteTo.File(@"C:\inetpub\logs\\LogFiles\pxelog\PXEwin-{Date}.log", rollingInterval: RollingInterval.Day).CreateLogger();
+        private static Serilog.Core.Logger mylog = new LoggerConfiguration().MinimumLevel.Debug().WriteTo.File(@"C:\inetpub\logs\LogFiles\pxelog\PXEwin.log", rollingInterval: RollingInterval.Day).CreateLogger();
 
         [WebMethod]
-        public string GetComputerName(String Mac)
+        public string GetComputerName(String MacAddress)
         {
             // Debug
-            mylog.Debug(string.Format("Calling GetComputerName, with param {0}", Mac));
+            mylog.Debug(string.Format("Calling GetComputerName, with param {0}", MacAddress));
 
             string sGetComputerName;
 
@@ -42,10 +42,10 @@ namespace PXEwin
         }
 
         [WebMethod]
-        public string GetComputerPassword(String Mac)
+        public string GetComputerPassword(String MacAddress)
         {
             // Debug
-            mylog.Debug(string.Format("Calling GetComputerPassword, with param {0}", Mac));
+            mylog.Debug(string.Format("Calling GetComputerPassword, with param {0}", MacAddress));
 
             string sGetComputerPassword;
 
@@ -60,6 +60,20 @@ namespace PXEwin
 
             return sGetComputerPassword;
             
+        }
+
+        [WebMethod]
+        public string GetOSType(String MacAddress)
+        {
+            // Debug
+            mylog.Debug(string.Format("Calling GetOSType, with param {0}", MacAddress));
+
+            string sGetOSType;
+
+            sGetOSType = "WSRV2K19STD";
+
+            return sGetOSType;
+
         }
 
 
