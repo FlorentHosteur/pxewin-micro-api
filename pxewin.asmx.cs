@@ -25,7 +25,7 @@ namespace PXEwin
         public string CreateMDT(String S_OS_GUEST, String S_MAC_ADDRESS, String P_PASSWORD, String S_NAME_VM)
         {
             // Debug
-            mylog.Debug(string.Format("Calling GetOSType, with param {0} / {1] / {2} / {3} (password is masked)", S_OS_GUEST, S_MAC_ADDRESS, S_NAME_VM));
+            mylog.Debug(string.Format("Calling GetOSType, with param {0}, {1}, {2} (password is masked)", S_OS_GUEST, S_MAC_ADDRESS, S_NAME_VM));
             string sGetOSType = "WSRV2K19STD";
 
             switch (S_OS_GUEST)
