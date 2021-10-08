@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using Serilog;
+using System.IO;
 
 
 namespace PXEwin
@@ -19,6 +20,47 @@ namespace PXEwin
     public class pxewin : System.Web.Services.WebService
     {
         private static Serilog.Core.Logger mylog = new LoggerConfiguration().MinimumLevel.Debug().WriteTo.File(@"C:\inetpub\logs\LogFiles\pxelog\PXEwin.log", rollingInterval: RollingInterval.Day).CreateLogger();
+
+        [WebMethod]
+        public string CreateMDT(String S_OS_GUEST, String S_MAC_ADDRESS, String P_PASSWORD, String S_NAME_VM)
+        {
+            // Debug
+            mylog.Debug(string.Format("Calling GetOSType, with param {0} / {1] / {2} / {3} (password is masked)", S_OS_GUEST, S_MAC_ADDRESS, S_NAME_VM));
+            string sGetOSType = "WSRV2K19STD";
+
+            switch (S_OS_GUEST)
+            {
+                case "WINDOWS_SERVER_2019":
+                    sGetOSType = "WSRV2K19STD";
+                    break;
+                case "WINDOWS_9_SERVER_64":
+                    sGetOSType = "WSRV2K16STD";
+                    break;
+                case "WINDOWS_8_SERVER_64":
+                    sGetOSType = "WSRV2K12STD";
+                    break;
+                default:
+                    sGetOSType = "WSRV2K19STD";
+                    break;
+            }
+
+            string baseTemplate = "";
+            using (TextReader Template = new StreamReader(@"D:\DeploymentShare\Control\CustomSettings_template.ini"))
+            {
+                baseTemplate = Template.ReadToEnd();
+            }
+            using (TextWriter NewCustomConf = new StreamWriter(@"D:\DeploymentShare\Control\CustomSettings.ini"))
+            {
+                NewCustomConf.Write(baseTemplate);
+                NewCustomConf.WriteLine(NewCustomConf.NewLine);
+                NewCustomConf.WriteLine("[" + S_MAC_ADDRESS.ToUpper() + "]");
+                NewCustomConf.WriteLine("OSDComputerName=" + S_NAME_VM);
+                NewCustomConf.WriteLine("AdminPassword=" + P_PASSWORD);
+                NewCustomConf.WriteLine("TaskSequenceID=" + sGetOSType);
+            }
+            return "OK";
+
+        }
 
         [WebMethod]
         public string GetComputerName(String MacAddress)
